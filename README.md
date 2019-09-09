@@ -1,0 +1,2 @@
+# AutoRepo_WindowsPhp
+ 这是一个在windows环境下一键生成cydia源的Packages文件的脚本
