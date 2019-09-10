@@ -51,12 +51,26 @@ function GetControlInfo($filename){
 		}
 	}
 	
-	$re = system('bin\ar\ar -x ' . $dir . '\\' . $filename . ' ' . $tar_name,$code);
+//	$re = system('bin\ar\ar -x ' . $dir . '\\' . $filename . ' ' . $tar_name,$code);
 	exec('bin\ar\ar -x ' . $dir . '\\' . $filename . ' ' .$tar_name);
+//	echo $filename . "\r\n";
 	exec('bin\7z\7z e -otmp -aoa '.$tar_name);
-	exec('bin\7z\7z e -otmp -aoa tmp\control.tar');
+	if(is_file('tmp\control.tar')){
+		$tmp_tar = 'tmp\control.tar';
+	}else{
+		$handler = opendir('tmp');
+		while (($tmpfilename = readdir($handler)) !== false) {
+			if ($tmpfilename != "." && $filename != "..") {
+				if(stripos($tmpfilename,'tmp')!==false){
+					$tmp_tar = 'tmp\\'.$tmpfilename;
+					break;
+				}
+			}
+		}
+	}
+	exec('bin\7z\7z e -otmp -aoa ' . $tmp_tar);
 	$control_string = file_get_contents('tmp\control');
-	unlink('tmp\control.tar');
+	unlink($tmp_tar);
 	unlink('tmp\control');
 	unlink($tar_name);
 	$full_filename = $dir . '/' . $filename;
