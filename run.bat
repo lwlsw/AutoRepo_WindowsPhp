@@ -11,5 +11,6 @@ ren bin\php\php.exe php.exe.bak
 
 echo 清理残留的垃圾文件
 del /q tmp\*
+
 pause
 exit
