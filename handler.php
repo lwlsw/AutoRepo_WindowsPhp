@@ -44,7 +44,7 @@ function GetControlInfo($filename){
 	unlink('tmp\control.tar');
 	unlink('tmp\control');
 	
-	exec('bin\ar\ar -t ' . $dir . '\\' . $filename,$file_array);
+	exec('bin\ar\ar -t "' . $dir . '\\' . $filename . '"',$file_array);
 	foreach($file_array as $v){
 		if(stripos($v,'control')!==false){
 			$tar_name = $v;
@@ -52,7 +52,7 @@ function GetControlInfo($filename){
 	}
 	
 //	$re = system('bin\ar\ar -x ' . $dir . '\\' . $filename . ' ' . $tar_name,$code);
-	exec('bin\ar\ar -x ' . $dir . '\\' . $filename . ' ' .$tar_name);
+	exec('bin\ar\ar -x "' . $dir . '\\' . $filename . '" ' .$tar_name);
 //	echo $filename . "\r\n";
 	exec('bin\7z\7z e -otmp -aoa '.$tar_name);
 	if(is_file('tmp\control.tar')){
