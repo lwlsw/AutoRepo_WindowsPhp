@@ -91,6 +91,8 @@ function makePackage($filename,$control_string){
 		return false;
 	$control['Size'] = filesize($filename);
 	$control['MD5sum'] = md5_file($filename);
+	$control['SHA256'] = hash_file('sha256',$filename);
+	$control['SHA512'] = hash_file('sha512',$filename);
 	if ($control['MD5sum'] === false)
 		return false;
 	$control["Filename"] = $filename;
