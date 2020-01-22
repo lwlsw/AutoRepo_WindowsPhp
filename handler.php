@@ -73,7 +73,7 @@ function GetControlInfo($filename){
 	unlink($tmp_tar);
 	unlink('tmp\control');
 	unlink($tar_name);
-	$full_filename = $dir . '/' . $filename;
+	$full_filename = './' . $dir . '/' . $filename;
 	$package_string = makePackage($full_filename,$control_string);
 	return $package_string;
 }
