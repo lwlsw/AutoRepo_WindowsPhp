@@ -85,19 +85,27 @@ function makePackage($filename,$control_string){
 		if (!strlen($field))
 			continue;
 		$tmp = explode(":", $field, 2);
-		$control[$tmp[0]] = trim($tmp[1]);
+		if($tmp[1])
+			$control[$tmp[0]] = trim($tmp[1]);
+		else
+			$control[] = $tmp[0];
 	}
 	if (!isset($control['Package']) || !isset($control['Version']))
 		return false;
+	$control['Depiction'] = str_ireplace('http://repo.auxiliumdev.com/','https://lwlsw.github.io/repo/',$control['Depiction']);
 	$control['Size'] = filesize($filename);
 	$control['MD5sum'] = md5_file($filename);
 	$control['SHA256'] = hash_file('sha256',$filename);
 	$control['SHA512'] = hash_file('sha512',$filename);
 	if ($control['MD5sum'] === false)
 		return false;
+	unset($control['Filename']);
 	$control["Filename"] = $filename;
 	foreach ($control as $k => $v)
-		$packages_string .= $k . ": " . $v . "\n";
+		if(is_numeric($k))
+			$packages_string .= $v . "\n";
+		else
+			$packages_string .= $k . ": " . $v . "\n";
 	
 	return $packages_string;
 }
