@@ -85,7 +85,7 @@ function makePackage($filename,$control_string){
 		if (!strlen($field))
 			continue;
 		$tmp = explode(":", $field, 2);
-		if($tmp[1])
+		if(stripos($field,':') !== false)
 			$control[$tmp[0]] = trim($tmp[1]);
 		else
 			$control[] = $tmp[0];
